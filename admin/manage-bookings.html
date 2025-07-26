@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Bookings - Hotel Paradise Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/admin.css">
+    <style>
+        /* Additional styling fixes */
+        .booking-filters {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .date-filter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .bookings-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .bookings-table th, .bookings-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .bookings-table th {
+            background-color: #f5f5f5;
+            font-weight: 600;
+        }
+        
+        .bookings-table tbody tr:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status.confirmed {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .status.checked_in, .status.checked-in {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
+        
+        .status.checked_out, .status.checked-out {
+            background-color: #ede7f6;
+            color: #5e35b1;
+        }
+        
+        .status.cancelled {
+            background-color: #ffebee;
+            color: #d32f2f;
+        }
+        
+        .status.pending {
+            background-color: #fff8e1;
+            color: #ff8f00;
+        }
+        
+        .btn-sm {
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+        
+        .booking-detail-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .booking-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            justify-content: flex-end;
+        }
+        
+        .booking-detail-section {
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            padding: 15px;
+        }
+        
+        .booking-detail-section h3 {
+            margin-top: 0;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            color: #1976d2;
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 8px;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            width: 40%;
+        }
+        
+        .detail-value {
+            width: 60%;
+        }
+        
+        .full-width {
+            grid-column: 1 / -1;
+        }
+        
+        .special-requests {
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .table-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .search-box {
+            position: relative;
+            width: 300px;
+        }
+        
+        .search-box i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #757575;
+        }
+        
+        @media (max-width: 768px) {
+            .booking-filters {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .booking-status-overview {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .table-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .bookings-table {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Hotel <span>Paradise</span></h2>
+                <span class="admin-title">Admin Portal</span>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                    </li>
+                    <li class="active">
+                        <a href="manage-bookings.html"><i class="fas fa-calendar-check"></i> Bookings</a>
+                    </li>
+                    <li>
+                        <a href="manage-rooms.html"><i class="fas fa-bed"></i> Rooms</a>
+                    </li>
+                    <li>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                    </li>
+                    <li class="logout-link">
+                        <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="admin-header">
+                <div class="hamburger-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="header-right">
+                    <div class="admin-notification">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                    <div class="admin-user">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Admin User">
+                        <span>Admin User</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </header>
+
+            <div class="booking-management">
+                <div class="dashboard-header">
+                    <h1>Manage Bookings</h1>
+                    <div class="booking-filters">
+                        <div class="date-filter">
+                            <input type="date" id="start-date" class="form-control">
+                            <span>to</span>
+                            <input type="date" id="end-date" class="form-control">
+                        </div>
+                        <button id="filter-btn" class="btn-primary">Apply Filter</button>
+                    </div>
+                </div>
+
+                <!-- Booking Status Overview -->
+                <div class="booking-status-overview">
+                    <div class="status-card">
+                        <div class="status-icon confirmed">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="status-details">
+                            <h3>Confirmed</h3>
+                            <p class="status-count" id="confirmed-count">0</p>
+                        </div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-icon checked-in">
+                            <i class="fas fa-door-open"></i>
+                        </div>
+                        <div class="status-details">
+                            <h3>Checked In</h3>
+                            <p class="status-count" id="checked-in-count">0</p>
+                        </div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-icon checked-out">
+                            <i class="fas fa-door-closed"></i>
+                        </div>
+                        <div class="status-details">
+                            <h3>Checked Out</h3>
+                            <p class="status-count" id="checked-out-count">0</p>
+                        </div>
+                    </div>
+                    <div class="status-card">
+                        <div class="status-icon cancelled">
+                            <i class="fas fa-times-circle"></i>
+                        </div>
+                        <div class="status-details">
+                            <h3>Cancelled</h3>
+                            <p class="status-count" id="cancelled-count">0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bookings Table -->
+                <div class="bookings-table-container">
+                    <div class="table-actions">
+                        <div class="search-box">
+                            <input type="text" id="search-booking" placeholder="Search bookings..." class="form-control">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <div class="status-filter">
+                            <select id="status-filter" class="form-control">
+                                <option value="">All Statuses</option>
+                                <option value="pending">Pending</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="checked_in">Checked In</option>
+                                <option value="checked_out">Checked Out</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+                    <table class="bookings-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Guest</th>
+                                <th>Room</th>
+                                <th>Dates</th>
+                                <th>Status</th>
+                                <th>Amount</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Bookings will be loaded here -->
+                            <tr>
+                                <td colspan="7">Loading bookings...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Booking Detail Modal -->
+            <div id="booking-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h2>Booking Details</h2>
+                    <div id="booking-details">
+                        <!-- Will be populated with booking details -->
+                    </div>
+                    <div class="booking-actions">
+                        <button id="check-in-btn" class="btn-primary">Check In</button>
+                        <button id="check-out-btn" class="btn-success">Check Out</button>
+                        <button id="cancel-booking-btn" class="btn-danger">Cancel Booking</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set default date filters to current month
+            const today = new Date();
+            const firstDay = new Date(today.getFullYear(), today.getMonth(), 1);
+            const lastDay = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+            
+            document.getElementById('start-date').value = firstDay.toISOString().split('T')[0];
+            document.getElementById('end-date').value = lastDay.toISOString().split('T')[0];
+            
+            // Load bookings and status counts
+            loadBookings();
+            loadStatusCounts();
+            
+            // Filter button click
+            document.getElementById('filter-btn').addEventListener('click', function() {
+                loadBookings();
+                loadStatusCounts();
+            });
+            
+            // Search input
+            document.getElementById('search-booking').addEventListener('input', function() {
+                filterBookings();
+            });
+            
+            // Status filter
+            document.getElementById('status-filter').addEventListener('change', function() {
+                filterBookings();
+            });
+            
+            // Booking Detail Modal
+            const bookingModal = document.getElementById('booking-modal');
+            const closeModal = bookingModal.querySelector('.close-modal');
+            
+            closeModal.addEventListener('click', function() {
+                bookingModal.style.display = 'none';
+            });
+            
+            window.addEventListener('click', function(e) {
+                if (e.target === bookingModal) {
+                    bookingModal.style.display = 'none';
+                }
+            });
+            
+            // Mobile sidebar toggle
+            const hamburgerMenu = document.querySelector('.hamburger-menu');
+            const sidebar = document.querySelector('.sidebar');
+            
+            hamburgerMenu.addEventListener('click', function() {
+                sidebar.classList.toggle('active');
+            });
+        });
+        
+        // View booking function
+        function viewBooking(bookingId) {
+            const bookingModal = document.getElementById('booking-modal');
+            const bookingDetails = document.getElementById('booking-details');
+            
+            bookingDetails.innerHTML = '<div class="loading">Loading booking details...</div>';
+            bookingModal.style.display = 'block';
+            
+            fetch(`../server/admin_handler.php?action=get_booking_details&id=${bookingId}`, {
+                headers: {
+                    'Authorization': 'Bearer ' + getToken()
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const booking = data.booking;
+                    
+                    // Format dates
+                    const checkIn = new Date(booking.check_in).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                    const checkOut = new Date(booking.check_out).toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                    const bookingDate = new Date(booking.booking_date || Date.now()).toLocaleString('en-US');
+                    
+                    bookingDetails.innerHTML = `
+                        <div class="booking-detail-grid">
+                            <div class="booking-detail-section">
+                                <h3>Booking Information</h3>
+                                <div class="detail-row">
+                                    <div class="detail-label">Booking ID:</div>
+                                    <div class="detail-value">#${booking.id}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Status:</div>
+                                    <div class="detail-value"><span class="status ${booking.status.toLowerCase()}">${formatStatus(booking.status)}</span></div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Booking Date:</div>
+                                    <div class="detail-value">${bookingDate}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Total Amount:</div>
+                                    <div class="detail-value">$${booking.total_price}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="booking-detail-section">
+                                <h3>Guest Information</h3>
+                                <div class="detail-row">
+                                    <div class="detail-label">Name:</div>
+                                    <div class="detail-value">${booking.guest_name}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Email:</div>
+                                    <div class="detail-value">${booking.guest_email}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Phone:</div>
+                                    <div class="detail-value">${booking.guest_phone}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="booking-detail-section">
+                                <h3>Stay Information</h3>
+                                <div class="detail-row">
+                                    <div class="detail-label">Room:</div>
+                                    <div class="detail-value">${booking.room_name} (${booking.room_type})</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Check-in:</div>
+                                    <div class="detail-value">${checkIn}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Check-out:</div>
+                                    <div class="detail-value">${checkOut}</div>
+                                </div>
+                                <div class="detail-row">
+                                    <div class="detail-label">Guests:</div>
+                                    <div class="detail-value">${booking.adults} Adults${booking.children > 0 ? `, ${booking.children} Children` : ''}</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        ${booking.special_requests ? `
+                            <div class="booking-detail-section full-width">
+                                <h3>Special Requests</h3>
+                                <div class="special-requests">
+                                    ${booking.special_requests}
+                                </div>
+                            </div>
+                        ` : ''}
+                    `;
+                    
+                    // Update action buttons based on booking status
+                    const checkInBtn = document.getElementById('check-in-btn');
+                    const checkOutBtn = document.getElementById('check-out-btn');
+                    const cancelBookingBtn = document.getElementById('cancel-booking-btn');
+                    
+                    checkInBtn.style.display = booking.status === 'confirmed' ? 'block' : 'none';
+                    checkOutBtn.style.display = booking.status === 'checked_in' ? 'block' : 'none';
+                    cancelBookingBtn.style.display = ['confirmed', 'pending'].includes(booking.status) ? 'block' : 'none';
+                    
+                    // Add event listeners to buttons
+                    checkInBtn.onclick = function() {
+                        updateBookingStatus(booking.id, 'checked_in');
+                    };
+                    
+                    checkOutBtn.onclick = function() {
+                        updateBookingStatus(booking.id, 'checked_out');
+                    };
+                    
+                    cancelBookingBtn.onclick = function() {
+                        if (confirm('Are you sure you want to cancel this booking?')) {
+                            updateBookingStatus(booking.id, 'cancelled');
+                        }
+                    };
+                } else {
+                    bookingDetails.innerHTML = `<p class="error">Error: ${data.message}</p>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                bookingDetails.innerHTML = '<p class="error">Error loading booking details. Please try again later.</p>';
+            });
+        }
+        
+        // Update booking status
+        function updateBookingStatus(bookingId, status) {
+            fetch('../server/booking_handler.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + getToken()
+                },
+                body: JSON.stringify({
+                    action: 'update_booking_status',
+                    booking_id: bookingId,
+                    status: status
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(`Booking ${formatStatus(status)} successfully.`);
+                    document.getElementById('booking-modal').style.display = 'none';
+                    loadBookings();
+                    loadStatusCounts();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            });
+        }
+        
+        // Load bookings with date filter
+        function loadBookings() {
+            const tbody = document.querySelector('.bookings-table tbody');
+            const startDate = document.getElementById('start-date').value;
+            const endDate = document.getElementById('end-date').value;
+            
+            tbody.innerHTML = '<tr><td colspan="7">Loading bookings...</td></tr>';
+            
+            // For demo purposes, create sample booking data
+            // In a real application, you would fetch this from the server
+            const demoBookings = [
+                {
+                    id: 1001,
+                    guest_name: "John Smith",
+                    room_name: "Deluxe King Room",
+                    check_in: "2025-07-25",
+                    check_out: "2025-07-28",
+                    status: "confirmed",
+                    total_price: 597.00
+                },
+                {
+                    id: 1002,
+                    guest_name: "Sarah Johnson",
+                    room_name: "Executive Suite",
+                    check_in: "2025-07-24",
+                    check_out: "2025-07-26",
+                    status: "checked_in",
+                    total_price: 698.00
+                },
+                {
+                    id: 1003,
+                    guest_name: "Michael Davis",
+                    room_name: "Family Room",
+                    check_in: "2025-07-27",
+                    check_out: "2025-07-30",
+                    status: "pending",
+                    total_price: 777.00
+                },
+                {
+                    id: 1004,
+                    guest_name: "Emily Wilson",
+                    room_name: "Twin Room",
+                    check_in: "2025-07-22",
+                    check_out: "2025-07-24",
+                    status: "checked_out",
+                    total_price: 358.00
+                },
+                {
+                    id: 1005,
+                    guest_name: "Robert Brown",
+                    room_name: "Deluxe King Room",
+                    check_in: "2025-07-26",
+                    check_out: "2025-07-28",
+                    status: "cancelled",
+                    total_price: 398.00
+                }
+            ];
+            
+            // Display the sample bookings
+            setTimeout(() => {
+                if (demoBookings.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="7">No bookings found for the selected period.</td></tr>';
+                    return;
+                }
+                
+                tbody.innerHTML = '';
+                demoBookings.forEach(booking => {
+                    const row = document.createElement('tr');
+                    row.setAttribute('data-id', booking.id);
+                    row.setAttribute('data-guest', booking.guest_name.toLowerCase());
+                    row.setAttribute('data-status', booking.status.toLowerCase());
+                    
+                    row.innerHTML = `
+                        <td>#${booking.id}</td>
+                        <td>${booking.guest_name}</td>
+                        <td>${booking.room_name}</td>
+                        <td>${formatDate(booking.check_in)} - ${formatDate(booking.check_out)}</td>
+                        <td><span class="status ${booking.status.toLowerCase()}">${formatStatus(booking.status)}</span></td>
+                        <td>$${booking.total_price}</td>
+                        <td>
+                            <button class="btn-primary btn-sm" onclick="viewBooking(${booking.id})">View</button>
+                            ${booking.status === 'confirmed' ? `<button class="btn-success btn-sm" onclick="updateBookingStatus(${booking.id}, 'checked_in')">Check In</button>` : ''}
+                            ${booking.status === 'checked_in' ? `<button class="btn-info btn-sm" onclick="updateBookingStatus(${booking.id}, 'checked_out')">Check Out</button>` : ''}
+                            ${['confirmed', 'pending'].includes(booking.status) ? `<button class="btn-danger btn-sm" onclick="if(confirm('Cancel this booking?')) updateBookingStatus(${booking.id}, 'cancelled')">Cancel</button>` : ''}
+                        </td>
+                    `;
+                    
+                    tbody.appendChild(row);
+                });
+            }, 500); // Simulate loading delay
+        }
+        
+        // Load booking status counts
+        function loadStatusCounts() {
+            // Sample count data
+            setTimeout(() => {
+                document.getElementById('confirmed-count').textContent = 8;
+                document.getElementById('checked-in-count').textContent = 5;
+                document.getElementById('checked-out-count').textContent = 12;
+                document.getElementById('cancelled-count').textContent = 2;
+            }, 500); // Simulate loading delay
+        }
+        
+        // Filter bookings based on search and status
+        function filterBookings() {
+            const searchTerm = document.getElementById('search-booking').value.toLowerCase();
+            const statusFilter = document.getElementById('status-filter').value.toLowerCase();
+            
+            const rows = document.querySelectorAll('.bookings-table tbody tr[data-id]');
+            
+            rows.forEach(row => {
+                const guest = row.getAttribute('data-guest');
+                const status = row.getAttribute('data-status');
+                
+                const matchesSearch = guest.includes(searchTerm);
+                const matchesStatus = statusFilter === '' || status === statusFilter;
+                
+                if (matchesSearch && matchesStatus) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+        
+        // Format date for display
+        function formatDate(dateString) {
+            const options = { month: 'short', day: 'numeric', year: 'numeric' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+        
+        // Format status for display
+        function formatStatus(status) {
+            switch(status) {
+                case 'checked_in': return 'Checked In';
+                case 'checked_out': return 'Checked Out';
+                default: return status.charAt(0).toUpperCase() + status.slice(1);
+            }
+        }
+        
+        // Get token from storage
+        function getToken() {
+            return localStorage.getItem('admin_token') || sessionStorage.getItem('admin_token');
+        }
+    </script>
+</body>
+</html>

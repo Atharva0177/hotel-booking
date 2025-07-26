@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Rooms - Hotel Paradise</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Hotel <span>Paradise</span></h1>
+                </a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="rooms.html" class="active">Rooms</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="book-now-btn">
+                <a href="booking.html" class="btn-primary">Book Now</a>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section class="page-banner">
+        <div class="banner-content">
+            <h1>Our Rooms</h1>
+            <div class="breadcrumbs">
+                <a href="index.html">Home</a> / <span>Rooms</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="room-filters">
+        <div class="container">
+            <form id="room-filter-form" class="filter-form">
+                <div class="form-group">
+                    <label for="filter-type">Room Type</label>
+                    <select id="filter-type" name="type">
+                        <option value="">All Types</option>
+                        <option value="Standard">Standard</option>
+                        <option value="Deluxe">Deluxe</option>
+                        <option value="Suite">Suite</option>
+                        <option value="Executive">Executive</option>
+                        <option value="Presidential">Presidential</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="filter-capacity">Capacity</label>
+                    <select id="filter-capacity" name="capacity">
+                        <option value="">Any</option>
+                        <option value="1">1 Person</option>
+                        <option value="2">2 Persons</option>
+                        <option value="3">3 Persons</option>
+                        <option value="4">4+ Persons</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="filter-price">Price Range</label>
+                    <div class="price-slider">
+                        <input type="range" id="filter-price" name="price" min="100" max="1000" step="50" value="500">
+                        <span id="price-display">$500</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn-primary">Apply Filters</button>
+                    <button type="reset" class="btn-secondary">Reset</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Rooms Listing Section -->
+    <section class="rooms-listing">
+        <div class="container">
+            <div class="rooms-grid" id="rooms-container">
+                <!-- Rooms will be loaded from the database -->
+                <div class="loading">Loading rooms...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Room Preview Modal -->
+    <div id="room-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="room-preview">
+                <div class="room-preview-slider" id="modal-room-slider">
+                    <!-- Images will be loaded here -->
+                </div>
+                <div class="room-preview-details" id="modal-room-details">
+                    <!-- Room details will be loaded here -->
+                </div>
+                <div class="room-preview-actions">
+                    <a href="#" id="modal-book-now" class="btn-primary">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <h2>Hotel <span>Paradise</span></h2>
+                    </div>
+                    <p>Experience luxury, comfort, and exceptional service at Hotel Paradise. Your perfect getaway destination.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="rooms.html">Rooms</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="booking.html">Book Now</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Paradise Street, City Name, Country</li>
+                        <li><i class="fas fa-phone"></i> +1 (123) 456-7890</li>
+                        <li><i class="fas fa-envelope"></i> info@hotelparadise.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hotel Paradise. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+</html>

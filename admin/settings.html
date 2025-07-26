@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Hotel Paradise Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Hotel <span>Paradise</span></h2>
+                <span class="admin-title">Admin Portal</span>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="manage-bookings.html"><i class="fas fa-calendar-check"></i> Bookings</a>
+                    </li>
+                    <li>
+                        <a href="manage-rooms.html"><i class="fas fa-bed"></i> Rooms</a>
+                    </li>
+                    <li class="active">
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                    </li>
+                    <li class="logout-link">
+                        <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="admin-header">
+                <div class="hamburger-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="header-right">
+                    <div class="admin-notification">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                    <div class="admin-user">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Admin User">
+                        <span>Admin User</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </header>
+
+            <div class="settings-content">
+                <div class="dashboard-header">
+                    <h1>Settings</h1>
+                </div>
+
+                <!-- Settings Tabs -->
+                <div class="settings-tabs">
+                    <button class="tab-btn active" data-tab="general">General</button>
+                    <button class="tab-btn" data-tab="profile">Profile</button>
+                    <button class="tab-btn" data-tab="security">Security</button>
+                    <button class="tab-btn" data-tab="amenities">Amenities</button>
+                    <button class="tab-btn" data-tab="notifications">Notifications</button>
+                </div>
+
+                <!-- Settings Content -->
+                <div class="settings-panels">
+                    <!-- General Settings -->
+                    <div class="settings-panel active" id="general-panel">
+                        <h2>General Settings</h2>
+                        
+                        <form id="general-settings-form" class="settings-form">
+                            <div class="form-group">
+                                <label for="hotel-name">Hotel Name</label>
+                                <input type="text" id="hotel-name" name="hotel_name" class="form-control" value="Hotel Paradise">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="hotel-address">Hotel Address</label>
+                                <textarea id="hotel-address" name="hotel_address" class="form-control" rows="3">123 Paradise Street, City Name, Country</textarea>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="contact-email">Contact Email</label>
+                                    <input type="email" id="contact-email" name="contact_email" class="form-control" value="info@hotelparadise.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="contact-phone">Contact Phone</label>
+                                    <input type="tel" id="contact-phone" name="contact_phone" class="form-control" value="+1 (123) 456-7890">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="check-in-time">Check-in Time</label>
+                                    <input type="time" id="check-in-time" name="check_in_time" class="form-control" value="15:00">
+                                </div>
+                                <div class="form-group">
+                                    <label for="check-out-time">Check-out Time</label>
+                                    <input type="time" id="check-out-time" name="check_out_time" class="form-control" value="12:00">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="tax-rate">Tax Rate (%)</label>
+                                <input type="number" id="tax-rate" name="tax_rate" class="form-control" min="0" max="100" step="0.01" value="10">
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Profile Settings -->
+                    <div class="settings-panel" id="profile-panel">
+                        <h2>Profile Settings</h2>
+                        
+                        <div class="profile-section">
+                            <div class="profile-avatar">
+                                <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Admin User">
+                                <div class="avatar-upload">
+                                    <label for="avatar-input" class="btn-secondary">Upload New Image</label>
+                                    <input type="file" id="avatar-input" accept="image/*" style="display: none;">
+                                </div>
+                            </div>
+                            
+                            <form id="profile-form" class="settings-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="profile-name">Full Name</label>
+                                        <input type="text" id="profile-name" name="name" class="form-control" value="Admin User">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile-username">Username</label>
+                                        <input type="text" id="profile-username" name="username" class="form-control" value="admin">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="profile-email">Email</label>
+                                        <input type="email" id="profile-email" name="email" class="form-control" value="admin@hotelparadise.com">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="profile-role">Role</label>
+                                        <input type="text" id="profile-role" class="form-control" value="Administrator" readonly>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="profile-bio">Bio</label>
+                                    <textarea id="profile-bio" name="bio" class="form-control" rows="4">Hotel administrator with 5+ years of experience in hospitality management.</textarea>
+                                </div>
+                                
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-primary">Update Profile</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Security Settings -->
+                    <div class="settings-panel" id="security-panel">
+                        <h2>Security Settings</h2>
+                        
+                        <form id="password-form" class="settings-form">
+                            <h3>Change Password</h3>
+                            <div class="form-group">
+                                <label for="current-password">Current Password</label>
+                                <input type="password" id="current-password" name="current_password" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="new-password">New Password</label>
+                                    <input type="password" id="new-password" name="new_password" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirm-password">Confirm New Password</label>
+                                    <input type="password" id="confirm-password" name="confirm_password" class="form-control" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn-primary">Change Password</button>
+                            </div>
+                        </form>
+                        
+                        <div class="security-options">
+                            <h3>Additional Security</h3>
+                            
+                            <div class="toggle-option">
+                                <div class="toggle-info">
+                                    <h4>Two-Factor Authentication</h4>
+                                    <p>Add an extra layer of security to your account</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="two-factor-toggle">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="toggle-option">
+                                <div class="toggle-info">
+                                    <h4>Login Notifications</h4>
+                                    <p>Receive email notifications when your account is accessed from a new device</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="login-notify-toggle" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Amenities Management -->
+                    <div class="settings-panel" id="amenities-panel">
+                        <h2>Amenities Management</h2>
+                        
+                        <div class="amenities-actions">
+                            <button id="add-amenity-btn" class="btn-primary"><i class="fas fa-plus"></i> Add New Amenity</button>
+                        </div>
+                        
+                        <div class="amenities-table-container">
+                            <table class="amenities-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Icon</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="amenities-list">
+                                    <!-- Will be populated from the database -->
+                                    <tr>
+                                        <td colspan="4">Loading amenities...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Add/Edit Amenity Modal -->
+                        <div id="amenity-modal" class="modal">
+                            <div class="modal-content">
+                                <span class="close-modal">&times;</span>
+                                <h2 id="amenity-modal-title">Add New Amenity</h2>
+                                <form id="amenity-form">
+                                    <input type="hidden" id="amenity-id" name="id">
+                                    
+                                    <div class="form-group">
+                                        <label for="amenity-name">Amenity Name</label>
+                                        <input type="text" id="amenity-name" name="name" class="form-control" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="amenity-icon">Icon Class (FontAwesome)</label>
+                                        <input type="text" id="amenity-icon" name="icon" class="form-control" placeholder="fa-wifi" required>
+                                        <div class="icon-preview">
+                                            <i class="fas fa-wifi" id="icon-preview-element"></i>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                        <button type="button" class="btn-secondary" id="cancel-amenity-btn">Cancel</button>
+                                        <button type="submit" class="btn-primary">Save Amenity</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Notification Settings -->
+                    <div class="settings-panel" id="notifications-panel">
+                        <h2>Notification Settings</h2>
+                        
+                        <div class="notification-settings">
+                            <h3>Email Notifications</h3>
+                            
+                            <div class="toggle-option">
+                                <div class="toggle-info">
+                                    <h4>New Booking</h4>
+                                    <p>Receive an email when a new booking is made</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="new-booking-notify" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="toggle-option">
+                                <div class="toggle-info">
+                                    <h4>Booking Cancellation</h4>
+                                    <p>Receive an email when a booking is cancelled</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="cancel-booking-notify" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="toggle-option">
+                                <div class="toggle-info">
+                                    <h4>Low Occupancy Alert</h4>
+                                    <p>Receive an alert when occupancy drops below a certain threshold</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="occupancy-notify">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <h3>System Notifications</h3>
+                            
+                            <div class="toggle-option">
+                                <div class="toggle-info">
+                                    <h4>Same-day Check-ins</h4>
+                                    <p>Show a notification for guests checking in today</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="checkin-notify" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="toggle-option">
+                                <div class="toggle-info">
+                                    <h4>Same-day Check-outs</h4>
+                                    <p>Show a notification for guests checking out today</p>
+                                </div>
+                                <label class="switch">
+                                    <input type="checkbox" id="checkout-notify" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="button" class="btn-primary" id="save-notifications-btn">Save Notification Settings</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Settings Tabs
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const settingsPanels = document.querySelectorAll('.settings-panel');
+            
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons and panels
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    settingsPanels.forEach(panel => panel.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding panel
+                    this.classList.add('active');
+                    const tabId = this.getAttribute('data-tab');
+                    document.getElementById(`${tabId}-panel`).classList.add('active');
+                });
+            });
+            
+            // General Settings Form
+            const generalSettingsForm = document.getElementById('general-settings-form');
+            if (generalSettingsForm) {
+                generalSettingsForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(generalSettingsForm);
+                    const settingsData = {};
+                    
+                    for (const [key, value] of formData.entries()) {
+                        settingsData[key] = value;
+                    }
+                    
+                    // Send data to server
+                    fetch('../server/admin_handler.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + getToken()
+                        },
+                        body: JSON.stringify({
+                            action: 'update_general_settings',
+                            settings: settingsData
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Settings updated successfully!');
+                        } else {
+                            alert('Error: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred. Please try again later.');
+                    });
+                });
+            }
+            
+            // Profile Form
+            const profileForm = document.getElementById('profile-form');
+            if (profileForm) {
+                profileForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const formData = new FormData(profileForm);
+                    const profileData = {};
+                    
+                    for (const [key, value] of formData.entries()) {
+                        profileData[key] = value;
+                    }
+                    
+                    // Send data to server
+                    fetch('../server/admin_handler.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + getToken()
+                        },
+                        body: JSON.stringify({
+                            action: 'update_profile',
+                            profile: profileData
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Profile updated successfully!');
+                        } else {
+                            alert('Error: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred. Please try again later.');
+                    });
+                });
+            }
+            
+            // Password Form
+            const passwordForm = document.getElementById('password-form');
+            if (passwordForm) {
+                passwordForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    const currentPassword = document.getElementById('current-password').value;
+                    const newPassword = document.getElementById('new-password').value;
+                    const confirmPassword = document.getElementById('confirm-password').value;
+                    
+                    if (newPassword !== confirmPassword) {
+                        alert('New password and confirm password do not match.');
+                        return;
+                    }
+                    
+                    // Send data to server
+                    fetch('../server/admin_handler.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + getToken()
+                        },
+                        body: JSON.stringify({
+                            action: 'change_password',
+                            current_password: currentPassword,
+                            new_password: newPassword
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Password changed successfully!');
+                            passwordForm.reset();
+                        } else {
+                            alert('Error: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred. Please try again later.');
+                    });
+                });
+            }
+            
+            // Avatar Upload
+            const avatarInput = document.getElementById('avatar-input');
+            if (avatarInput) {
+                avatarInput.addEventListener('change', function() {
+                    if (this.files && this.files[0]) {
+                        const file = this.files[0];
+                        
+                        // Create FormData
+                        const formData = new FormData();
+                        formData.append('action', 'upload_avatar');
+                        formData.append('avatar', file);
+                        
+                        // Send file to server
+                        fetch('../server/admin_handler.php', {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': 'Bearer ' + getToken()
+                            },
+                            body: formData
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                // Update avatar preview
+                                document.querySelector('.profile-avatar img').src = data.avatar_url;
+                                alert('Avatar updated successfully!');
+                            } else {
+                                alert('Error: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred. Please try again later.');
+                        });
+                    }
+                });
+            }
+            
+            // Icon Preview
+            const amenityIcon = document.getElementById('amenity-icon');
+            const iconPreview = document.getElementById('icon-preview-element');
+            
+            if (amenityIcon && iconPreview) {
+                amenityIcon.addEventListener('input', function() {
+                    const iconClass = this.value;
+                    iconPreview.className = '';
+                    iconPreview.classList.add('fas', iconClass);
+                });
+            }
+            
+            // Load Amenities
+            loadAmenities();
+            
+            // Amenity Modal
+            const amenityModal = document.getElementById('amenity-modal');
+            const addAmenityBtn = document.getElementById('add-amenity-btn');
+            const closeAmenityModal = amenityModal.querySelector('.close-modal');
+            const cancelAmenityBtn = document.getElementById('cancel-amenity-btn');
+            const amenityForm = document.getElementById('amenity-form');
+            const amenityModalTitle = document.getElementById('amenity-modal-title');
+            
+            addAmenityBtn.addEventListener('click', function() {
+                amenityModalTitle.textContent = 'Add New Amenity';
+                amenityForm.reset();
+                document.getElementById('amenity-id').value = '';
+                amenityModal.style.display = 'block';
+            });
+            
+            closeAmenityModal.addEventListener('click', closeAmenityModal);
+            cancelAmenityBtn.addEventListener('click', closeAmenityModal);
+            
+            function closeAmenityModal() {
+                amenityModal.style.display = 'none';
+            }
+            
+            // Amenity Form
+            amenityForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const amenityId = document.getElementById('amenity-id').value;
+                const amenityName = document.getElementById('amenity-name').value;
+                const amenityIcon = document.getElementById('amenity-icon').value;
+                
+                const action = amenityId ? 'update_amenity' : 'add_amenity';
+                
+                // Send data to server
+                fetch('../server/admin_handler.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + getToken()
+                    },
+                    body: JSON.stringify({
+                        action: action,
+                        id: amenityId,
+                        name: amenityName,
+                        icon: amenityIcon
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(amenityId ? 'Amenity updated successfully!' : 'Amenity added successfully!');
+                        closeAmenityModal();
+                        loadAmenities();
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again later.');
+                });
+            });
+            
+            // Save Notification Settings
+            const saveNotificationsBtn = document.getElementById('save-notifications-btn');
+            if (saveNotificationsBtn) {
+                saveNotificationsBtn.addEventListener('click', function() {
+                    const notificationSettings = {
+                        new_booking: document.getElementById('new-booking-notify').checked,
+                        cancel_booking: document.getElementById('cancel-booking-notify').checked,
+                        low_occupancy: document.getElementById('occupancy-notify').checked,
+                        checkin_notify: document.getElementById('checkin-notify').checked,
+                        checkout_notify: document.getElementById('checkout-notify').checked
+                    };
+                    
+                    // Send data to server
+                    fetch('../server/admin_handler.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + getToken()
+                        },
+                        body: JSON.stringify({
+                            action: 'update_notification_settings',
+                            settings: notificationSettings
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Notification settings updated successfully!');
+                        } else {
+                            alert('Error: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred. Please try again later.');
+                    });
+                });
+            }
+        });
+        
+        // Load amenities
+        function loadAmenities() {
+            const amenitiesList = document.getElementById('amenities-list');
+            if (!amenitiesList) return;
+            
+            fetch('../server/api.php?action=get_amenities', {
+                headers: {
+                    'Authorization': 'Bearer ' + getToken()
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.amenities.length === 0) {
+                        amenitiesList.innerHTML = '<tr><td colspan="4">No amenities found.</td></tr>';
+                        return;
+                    }
+                    
+                    let html = '';
+                    data.amenities.forEach(amenity => {
+                        html += `
+                            <tr>
+                                <td>${amenity.id}</td>
+                                <td>${amenity.name}</td>
+                                <td><i class="fas ${amenity.icon}"></i> ${amenity.icon}</td>
+                                <td>
+                                    <button class="btn-primary btn-sm" onclick="editAmenity(${amenity.id})">Edit</button>
+                                    <button class="btn-danger btn-sm" onclick="if(confirm('Are you sure you want to delete this amenity?')) deleteAmenity(${amenity.id})">Delete</button>
+                                </td>
+                            </tr>
+                        `;
+                    });
+                    
+                    amenitiesList.innerHTML = html;
+                } else {
+                    amenitiesList.innerHTML = `<tr><td colspan="4">Error: ${data.message}</td></tr>`;
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                amenitiesList.innerHTML = '<tr><td colspan="4">Error loading amenities.</td></tr>';
+            });
+        }
+        
+        // Edit amenity
+        window.editAmenity = function(amenityId) {
+            fetch(`../server/api.php?action=get_amenity&id=${amenityId}`, {
+                headers: {
+                    'Authorization': 'Bearer ' + getToken()
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const amenity = data.amenity;
+                    
+                    document.getElementById('amenity-modal-title').textContent = 'Edit Amenity';
+                    document.getElementById('amenity-id').value = amenity.id;
+                    document.getElementById('amenity-name').value = amenity.name;
+                    document.getElementById('amenity-icon').value = amenity.icon;
+                    
+                    // Update icon preview
+                    const iconPreview = document.getElementById('icon-preview-element');
+                    iconPreview.className = '';
+                    iconPreview.classList.add('fas', amenity.icon);
+                    
+                    document.getElementById('amenity-modal').style.display = 'block';
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while loading amenity details.');
+            });
+        };
+        
+        // Delete amenity
+        window.deleteAmenity = function(amenityId) {
+            fetch('../server/admin_handler.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + getToken()
+                },
+                body: JSON.stringify({
+                    action: 'delete_amenity',
+                    id: amenityId
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Amenity deleted successfully!');
+                    loadAmenities();
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again later.');
+            });
+        };
+    </script>
+</body>
+</html>

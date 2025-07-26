@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation - Hotel Paradise</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Hotel <span>Paradise</span></h1>
+                </a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="rooms.html">Rooms</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="book-now-btn">
+                <a href="booking.html" class="btn-primary">Book Now</a>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section class="page-banner">
+        <div class="banner-content">
+            <h1>Booking Confirmation</h1>
+            <div class="breadcrumbs">
+                <a href="index.html">Home</a> / <span>Confirmation</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Confirmation Section -->
+    <section class="confirmation-section">
+        <div class="container">
+            <div class="confirmation-container">
+                <div class="confirmation-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h2>Thank You for Your Reservation!</h2>
+                <p>Your booking has been confirmed and we're looking forward to your stay.</p>
+                
+                <div class="confirmation-details" id="confirmation-details">
+                    <div class="loading">Loading booking details...</div>
+                </div>
+                
+                <div class="confirmation-info">
+                    <h3>What's Next?</h3>
+                    <ul>
+                        <li><i class="fas fa-envelope"></i> A confirmation email has been sent to your email address.</li>
+                        <li><i class="fas fa-clock"></i> Check-in time is at 3:00 PM and check-out time is at 12:00 PM.</li>
+                        <li><i class="fas fa-id-card"></i> Please bring a valid ID for check-in.</li>
+                        <li><i class="fas fa-credit-card"></i> Payment will be collected upon check-in.</li>
+                    </ul>
+                </div>
+                
+                <div class="confirmation-actions">
+                    <a href="index.html" class="btn-primary">Return to Home</a>
+                    <a href="contact.html" class="btn-secondary">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <h2>Hotel <span>Paradise</span></h2>
+                    </div>
+                    <p>Experience luxury, comfort, and exceptional service at Hotel Paradise. Your perfect getaway destination.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="rooms.html">Rooms</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="booking.html">Book Now</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Paradise Street, City Name, Country</li>
+                        <li><i class="fas fa-phone"></i> +1 (123) 456-7890</li>
+                        <li><i class="fas fa-envelope"></i> info@hotelparadise.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hotel Paradise. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get booking ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const bookingId = urlParams.get('booking_id');
+            
+            if (bookingId) {
+                // Load booking details
+                fetch(`server/api.php?action=get_booking_details&booking_id=${bookingId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            const booking = data.booking;
+                            const confirmationDetails = document.getElementById('confirmation-details');
+                            
+                            let html = `
+                                <div class="confirmation-item">
+                                    <div class="confirmation-label">Booking ID</div>
+                                    <div class="confirmation-value">#${booking.id}</div>
+                                </div>
+                                <div class="confirmation-item">
+                                    <div class="confirmation-label">Room</div>
+                                    <div class="confirmation-value">${booking.room_name}</div>
+                                </div>
+                                <div class="confirmation-item">
+                                    <div class="confirmation-label">Check-in</div>
+                                    <div class="confirmation-value">${formatDate(booking.check_in)}</div>
+                                </div>
+                                <div class="confirmation-item">
+                                    <div class="confirmation-label">Check-out</div>
+                                    <div class="confirmation-value">${formatDate(booking.check_out)}</div>
+                                </div>
+                                <div class="confirmation-item">
+                                    <div class="confirmation-label">Guest</div>
+                                    <div class="confirmation-value">${booking.guest_name}</div>
+                                </div>
+                                <div class="confirmation-item">
+                                    <div class="confirmation-label">Total Amount</div>
+                                    <div class="confirmation-value">$${booking.total_price}</div>
+                                </div>
+                            `;
+                            
+                            confirmationDetails.innerHTML = html;
+                        } else {
+                            document.getElementById('confirmation-details').innerHTML = `<p>Error: ${data.message}</p>`;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        document.getElementById('confirmation-details').innerHTML = '<p>Error loading booking details. Please contact our support.</p>';
+                    });
+            } else {
+                document.getElementById('confirmation-details').innerHTML = '<p>No booking information found. Please contact our support.</p>';
+            }
+            
+            function formatDate(dateString) {
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                return new Date(dateString).toLocaleDateString('en-US', options);
+            }
+        });
+    </script>
+</body>
+</html>

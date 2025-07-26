@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Rooms - Hotel Paradise Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Hotel <span>Paradise</span></h2>
+                <span class="admin-title">Admin Portal</span>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="dashboard.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                    </li>
+                    <li>
+                        <a href="manage-bookings.html"><i class="fas fa-calendar-check"></i> Bookings</a>
+                    </li>
+                    <li class="active">
+                        <a href="manage-rooms.html"><i class="fas fa-bed"></i> Rooms</a>
+                    </li>
+                    <li>
+                        <a href="settings.html"><i class="fas fa-cog"></i> Settings</a>
+                    </li>
+                    <li class="logout-link">
+                        <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="admin-header">
+                <div class="hamburger-menu">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <div class="header-right">
+                    <div class="admin-notification">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                    <div class="admin-user">
+                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Admin User">
+                        <span>Admin User</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </header>
+
+            <div class="room-management">
+                <div class="dashboard-header">
+                    <h1>Manage Rooms</h1>
+                    <button id="add-room-btn" class="btn-primary"><i class="fas fa-plus"></i> Add New Room</button>
+                </div>
+
+                <!-- Room Filters -->
+                <div class="room-filters">
+                    <div class="form-group">
+                        <input type="text" id="search-room" placeholder="Search rooms..." class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <select id="filter-type" class="form-control">
+                            <option value="">All Room Types</option>
+                            <option value="Standard">Standard</option>
+                            <option value="Deluxe">Deluxe</option>
+                            <option value="Suite">Suite</option>
+                            <option value="Executive">Executive</option>
+                            <option value="Presidential">Presidential</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select id="filter-status" class="form-control">
+                            <option value="">All Statuses</option>
+                            <option value="available">Available</option>
+                            <option value="booked">Booked</option>
+                            <option value="maintenance">Maintenance</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Room Grid -->
+                <div class="room-grid">
+                    <!-- Rooms will be loaded here -->
+                    <div class="loading">Loading rooms...</div>
+                </div>
+            </div>
+
+            <!-- Room Modal -->
+            <div id="room-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h2 id="modal-title">Add New Room</h2>
+                    <form id="room-form">
+                        <input type="hidden" id="room-id" name="room_id">
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="room-name">Room Name</label>
+                                <input type="text" id="room-name" name="room_name" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="room-type">Room Type</label>
+                                <select id="room-type" name="room_type" class="form-control" required>
+                                    <option value="Standard">Standard</option>
+                                    <option value="Deluxe">Deluxe</option>
+                                    <option value="Suite">Suite</option>
+                                    <option value="Executive">Executive</option>
+                                    <option value="Presidential">Presidential</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="room-price">Price Per Night ($)</label>
+                                <input type="number" id="room-price" name="price" class="form-control" min="0" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="room-capacity">Capacity</label>
+                                <input type="number" id="room-capacity" name="capacity" class="form-control" min="1" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="room-beds">Number of Beds</label>
+                                <input type="number" id="room-beds" name="beds" class="form-control" min="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="room-size">Room Size</label>
+                                <input type="text" id="room-size" name="size" class="form-control" placeholder="e.g., 30m²" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="room-description">Description</label>
+                            <textarea id="room-description" name="description" class="form-control" rows="4" required></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="room-main-image">Main Image URL</label>
+                            <input type="url" id="room-main-image" name="main_image" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Additional Images URLs (one per line)</label>
+                            <textarea id="room-images" name="images" class="form-control" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Amenities</label>
+                            <div class="amenities-checkboxes" id="amenities-list">
+                                <!-- Will be populated dynamically -->
+                                <div class="loading">Loading amenities...</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="room-status">Status</label>
+                            <select id="room-status" name="status" class="form-control" required>
+                                <option value="available">Available</option>
+                                <option value="booked">Booked</option>
+                                <option value="maintenance">Maintenance</option>
+                            </select>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" id="cancel-btn">Cancel</button>
+                            <button type="submit" class="btn-primary" id="save-room-btn">Save Room</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/admin.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Room Modal
+            const roomModal = document.getElementById('room-modal');
+            const addRoomBtn = document.getElementById('add-room-btn');
+            const closeModal = document.querySelector('.close-modal');
+            const cancelBtn = document.getElementById('cancel-btn');
+            const roomForm = document.getElementById('room-form');
+            const modalTitle = document.getElementById('modal-title');
+            const roomIdInput = document.getElementById('room-id');
+            
+            // Open modal for adding a new room
+            addRoomBtn.addEventListener('click', function() {
+                modalTitle.textContent = 'Add New Room';
+                roomForm.reset();
+                roomIdInput.value = '';
+                roomModal.style.display = 'block';
+                loadAmenities();
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', closeRoomModal);
+            cancelBtn.addEventListener('click', closeRoomModal);
+            
+            window.addEventListener('click', function(e) {
+                if (e.target === roomModal) {
+                    closeRoomModal();
+                }
+            });
+            
+            function closeRoomModal() {
+                roomModal.style.display = 'none';
+            }
+            
+            // Room form submission
+            roomForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const formData = new FormData(roomForm);
+                const roomData = {};
+                
+                // Convert FormData to object
+                for (const [key, value] of formData.entries()) {
+                    roomData[key] = value;
+                }
+                
+                // Handle amenities
+                roomData.amenities = [];
+                const amenityCheckboxes = document.querySelectorAll('input[name="amenities"]:checked');
+                amenityCheckboxes.forEach(checkbox => {
+                    roomData.amenities.push(checkbox.value);
+                });
+                
+                // Handle additional images
+                if (roomData.images) {
+                    roomData.images = roomData.images.split('\n').filter(url => url.trim() !== '');
+                }
+                
+                // Determine if it's an add or update operation
+                const action = roomData.room_id ? 'update_room' : 'add_room';
+                
+                // Send data to server
+                fetch('../server/room_handler.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + getToken()
+                    },
+                    body: JSON.stringify({
+                        action: action,
+                        ...roomData
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(action === 'add_room' ? 'Room added successfully!' : 'Room updated successfully!');
+                        closeRoomModal();
+                        loadRooms();
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again later.');
+                });
+            });
+            
+            // Load amenities for the form
+            function loadAmenities() {
+                const amenitiesList = document.getElementById('amenities-list');
+                
+                fetch('../server/api.php?action=get_amenities', {
+                    headers: {
+                        'Authorization': 'Bearer ' + getToken()
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        let html = '';
+                        data.amenities.forEach(amenity => {
+                            html += `
+                                <div class="amenity-checkbox">
+                                    <input type="checkbox" id="amenity-${amenity.id}" name="amenities" value="${amenity.id}">
+                                    <label for="amenity-${amenity.id}">${amenity.name}</label>
+                                </div>
+                            `;
+                        });
+                        
+                        amenitiesList.innerHTML = html;
+                    } else {
+                        amenitiesList.innerHTML = `<p>Error: ${data.message}</p>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    amenitiesList.innerHTML = '<p>Error loading amenities.</p>';
+                });
+            }
+            
+            // Filter functionality
+            const searchInput = document.getElementById('search-room');
+            const filterType = document.getElementById('filter-type');
+            const filterStatus = document.getElementById('filter-status');
+            
+            searchInput.addEventListener('input', applyFilters);
+            filterType.addEventListener('change', applyFilters);
+            filterStatus.addEventListener('change', applyFilters);
+            
+            function applyFilters() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const roomType = filterType.value;
+                const status = filterStatus.value;
+                
+                const roomCards = document.querySelectorAll('.room-card');
+                
+                roomCards.forEach(card => {
+                    const roomName = card.querySelector('h3').textContent.toLowerCase();
+                    const cardRoomType = card.getAttribute('data-type').toLowerCase();
+                    const cardStatus = card.getAttribute('data-status').toLowerCase();
+                    
+                    const matchesSearch = roomName.includes(searchTerm);
+                    const matchesType = roomType === '' || cardRoomType === roomType.toLowerCase();
+                    const matchesStatus = status === '' || cardStatus === status.toLowerCase();
+                    
+                    if (matchesSearch && matchesType && matchesStatus) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Function to open room modal for editing
+            window.openRoomModal = function(roomId) {
+                modalTitle.textContent = 'Edit Room';
+                
+                // Fetch room details
+                fetch(`../server/api.php?action=get_room_details&id=${roomId}`, {
+                    headers: {
+                        'Authorization': 'Bearer ' + getToken()
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const room = data.room;
+                        
+                        // Populate form
+                        roomIdInput.value = room.id;
+                        document.getElementById('room-name').value = room.room_name;
+                        document.getElementById('room-type').value = room.room_type;
+                        document.getElementById('room-price').value = room.price;
+                        document.getElementById('room-capacity').value = room.capacity;
+                        document.getElementById('room-beds').value = room.beds;
+                        document.getElementById('room-size').value = room.size;
+                        document.getElementById('room-description').value = room.description;
+                        document.getElementById('room-main-image').value = room.main_image;
+                        document.getElementById('room-status').value = room.status;
+                        
+                        // Load additional images
+                        if (room.images && room.images.length > 0) {
+                            const imageUrls = room.images.map(img => img.image_url).join('\n');
+                            document.getElementById('room-images').value = imageUrls;
+                        } else {
+                            document.getElementById('room-images').value = '';
+                        }
+                        
+                        // Load amenities
+                        loadAmenities().then(() => {
+                            // Check amenities that belong to this room
+                            if (room.amenities && room.amenities.length > 0) {
+                                room.amenities.forEach(amenity => {
+                                    const checkbox = document.getElementById(`amenity-${amenity.id}`);
+                                    if (checkbox) checkbox.checked = true;
+                                });
+                            }
+                        });
+                        
+                        roomModal.style.display = 'block';
+                    } else {
+                        alert('Error: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while loading room details.');
+                });
+            };
+        });
+    </script>
+</body>
+</html>

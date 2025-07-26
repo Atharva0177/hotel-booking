@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - Hotel Paradise</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Hotel <span>Paradise</span></h1>
+            <h2>Admin Portal</h2>
+        </div>
+        <div class="login-form-container">
+            <form id="admin-login-form" class="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" name="password" required>
+                    </div>
+                </div>
+                <div class="form-group remember-me">
+                    <input type="checkbox" id="remember" name="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn-primary btn-block">Login</button>
+                </div>
+                <div class="login-footer">
+                    <a href="#" class="forgot-password">Forgot password?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="login-footer-text">
+        <p>&copy; 2025 Hotel Paradise. All rights reserved.</p>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/admin.js"></script>
+</body>
+</html>

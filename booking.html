@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Room - Hotel Paradise</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="index.html">
+                    <h1>Hotel <span>Paradise</span></h1>
+                </a>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="rooms.html">Rooms</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="book-now-btn">
+                <a href="booking.html" class="btn-primary active">Book Now</a>
+            </div>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section class="page-banner">
+        <div class="banner-content">
+            <h1>Book Your Stay</h1>
+            <div class="breadcrumbs">
+                <a href="index.html">Home</a> / <span>Booking</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section class="booking-section">
+        <div class="container">
+            <div class="booking-container">
+                <div class="booking-form-container">
+                    <h2>Reservation Details</h2>
+                    <form id="booking-form" class="booking-form">
+                        <!-- Booking Information -->
+                        <div class="form-section">
+                            <h3>Stay Information</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="check-in-date">Check In Date</label>
+                                    <input type="date" id="check-in-date" name="check_in" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="check-out-date">Check Out Date</label>
+                                    <input type="date" id="check-out-date" name="check_out" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="adults">Adults</label>
+                                    <select id="adults" name="adults" required>
+                                        <option value="1">1</option>
+                                        <option value="2" selected>2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="children">Children</label>
+                                    <select id="children" name="children">
+                                        <option value="0" selected>0</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Room Selection -->
+                        <div class="form-section">
+                            <h3>Select Room</h3>
+                            <div class="room-selection" id="available-rooms">
+                                <!-- Available rooms will be loaded here -->
+                                <div class="loading">Please select dates to view available rooms</div>
+                            </div>
+                        </div>
+
+                        <!-- Guest Information -->
+                        <div class="form-section">
+                            <h3>Guest Information</h3>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="first-name">First Name</label>
+                                    <input type="text" id="first-name" name="first_name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="last-name">Last Name</label>
+                                    <input type="text" id="last-name" name="last_name" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone</label>
+                                    <input type="tel" id="phone" name="phone" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Special Requests -->
+                        <div class="form-section">
+                            <h3>Special Requests</h3>
+                            <div class="form-group">
+                                <textarea id="special-requests" name="special_requests" rows="4" placeholder="Any special requests or requirements..."></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Terms and Conditions -->
+                        <div class="form-section">
+                            <div class="form-group checkbox-group">
+                                <input type="checkbox" id="terms" name="terms" required>
+                                <label for="terms">I agree to the <a href="#" class="terms-link">terms and conditions</a></label>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="form-section submit-section">
+                            <button type="submit" class="btn-primary btn-block">Complete Reservation</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="booking-summary">
+                    <div class="summary-card">
+                        <h3>Booking Summary</h3>
+                        <div class="summary-details" id="booking-summary-details">
+                            <div class="summary-placeholder">
+                                <p>Select dates and room to see booking details</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terms Modal -->
+    <div id="terms-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Terms and Conditions</h2>
+            <div class="terms-content">
+                <h3>Reservation Policy</h3>
+                <p>All reservations must be guaranteed by a valid credit card at the time of booking. The hotel reserves the right to pre-authorize credit cards prior to arrival.</p>
+                
+                <h3>Check-in/Check-out Policy</h3>
+                <p>Check-in time is 3:00 PM. Check-out time is 12:00 PM. Early check-in and late check-out are subject to availability and may incur additional charges.</p>
+                
+                <h3>Cancellation Policy</h3>
+                <p>Cancellations must be made 48 hours prior to arrival to avoid a penalty of one night's room charge. No-shows will be charged for the full reservation amount.</p>
+                
+                <h3>Pet Policy</h3>
+                <p>Pets are allowed in designated rooms only with a non-refundable pet fee of $50 per stay. Service animals are exempt from this fee.</p>
+                
+                <h3>Smoking Policy</h3>
+                <p>Hotel Paradise is a smoke-free property. A cleaning fee of $250 will be charged for smoking in non-designated areas.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <h2>Hotel <span>Paradise</span></h2>
+                    </div>
+                    <p>Experience luxury, comfort, and exceptional service at Hotel Paradise. Your perfect getaway destination.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="rooms.html">Rooms</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="booking.html">Book Now</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact Us</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 Paradise Street, City Name, Country</li>
+                        <li><i class="fas fa-phone"></i> +1 (123) 456-7890</li>
+                        <li><i class="fas fa-envelope"></i> info@hotelparadise.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Hotel Paradise. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/booking.js"></script>
+    <script src="js/validation.js"></script>
+</body>
+</html>
